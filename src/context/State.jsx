@@ -7,6 +7,12 @@ const State = (props) => {
 	const [iscartupdated, setiscartupdated] = useState(false);
 	const [ispopup, setispopup] = useState(false);
 	const [islogin, setislogin] = useState(true);
+	const [isFacilityLogin, setIsFacilityLogin] = useState(false);
+	const [isUserLogin, setIsUserLogin] = useState(false);
+	const [isRegister, setIsRegister] = useState(false);
+	const [isFacilityRegister, setIsFacilityRegister] = useState(false);
+	const [isUserRegister, setIsUserRegister] = useState(false);
+
 	const [Location, setLocation] = useState("");
 	const [Locationstate, setLocationstate] = useState("");
 	const [user, setUser] = useState(null);
@@ -159,6 +165,14 @@ const State = (props) => {
 				islogin,
 				setislogin,
 				category,
+				isFacilityLogin,
+				setIsFacilityLogin,
+				isFacilityRegister,
+				setIsFacilityRegister,
+				isUserLogin,
+				setIsUserLogin,
+				isUserRegister,
+				setIsUserRegister,
 			}}
 		>
 			{props.children}
