@@ -7,8 +7,9 @@ const State = (props) => {
 	const [iscartupdated, setiscartupdated] = useState(false);
 	const [ispopup, setispopup] = useState(false);
 	const [islogin, setislogin] = useState(true);
-	const [isFacilityLogin, setIsFacilityLogin] = useState(false);
-	const [isUserLogin, setIsUserLogin] = useState(false);
+	// const [isFacilityLogin, setIsFacilityLogin] = useState(false);
+	// const [isUserLogin, setIsUserLogin] = useState(false);
+	const [role, setRole] = useState("user");
 	const [isRegister, setIsRegister] = useState(false);
 	const [isFacilityRegister, setIsFacilityRegister] = useState(false);
 	const [isUserRegister, setIsUserRegister] = useState(false);
@@ -41,12 +42,15 @@ const State = (props) => {
 	// To fetch the user details
 	const fetchuser = async () => {
 		try {
-			const res = await fetch("http://localhost:8000/api/v1/users/current-user", {
+			const endpoint =
+				role === "user" ? "http://localhost:8000/api/v1/users/current-user" : "http://localhost:8000/api/v1/users/current-facility";
+			const res = await fetch(endpoint, {
 				method: "GET",
-				credentials: "include", // Include cookies with the request
+				// Include cookies with the request
 				headers: {
 					"Content-Type": "application/json",
 				},
+				credentials: "include",
 			});
 
 			if (res.status === 401) {
@@ -165,12 +169,12 @@ const State = (props) => {
 				islogin,
 				setislogin,
 				category,
-				isFacilityLogin,
-				setIsFacilityLogin,
+				setisLoading,
+				isLoading,
 				isFacilityRegister,
 				setIsFacilityRegister,
-				isUserLogin,
-				setIsUserLogin,
+				role,
+				setRole,
 				isUserRegister,
 				setIsUserRegister,
 			}}

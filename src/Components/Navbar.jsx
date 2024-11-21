@@ -12,12 +12,13 @@ import { useEffect } from "react";
 import Avatar from "react-avatar";
 
 const Navbar = () => {
-	const { setislogin, Location, user, islogin, setUser } = useContext(Context);
-	console.log(islogin);
+	const { setislogin, Location, user, islogin, setUser, role } = useContext(Context);
+	// console.log(islogin);
 	const navigate = useNavigate();
 	const LogOut = async () => {
 		try {
-			const res = await fetch("http://localhost:8000/api/v1/users/logout", {
+			const endpoint = role === "user" ? "http://localhost:8000/api/v1/users/logout" : "http://localhost:8000/api/v1/facility/logout";
+			const res = await fetch(endpoint, {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
@@ -119,7 +120,12 @@ const Navbar = () => {
 										console.log(user);
 									}}
 								>
-									<Avatar name={user?.fullName} size="50px" maxInitials={2} style={{ borderRadius: "50%" }} />
+									<Avatar
+										name={user?.fullName || user?.facilityName}
+										size="50px"
+										maxInitials={2}
+										style={{ borderRadius: "50%" }}
+									/>
 								</button>
 								<div className="md:flex hidden gap-[5vh]">
 									<button
