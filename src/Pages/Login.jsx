@@ -14,8 +14,19 @@ import { set } from "mongoose";
 import { toastFailure } from "../utils/Toasters";
 
 const Login = () => {
-	const { islogin, setislogin, setUser, setRole, role, setIsUserRegister, setIsFacilityRegister, isFacilityRegister, isUserRegister, isLoading } =
-		useContext(Context);
+	const {
+		islogin,
+		setislogin,
+		setUser,
+		user,
+		setRole,
+		role,
+		setIsUserRegister,
+		setIsFacilityRegister,
+		isFacilityRegister,
+		isUserRegister,
+		isLoading,
+	} = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [username, setUsername] = useState("");
@@ -28,6 +39,12 @@ const Login = () => {
 		gsap.fromTo(".auth", { x: 400, opacity: 0 }, { x: 0, opacity: 100, duration: 2, ease: "power3.out", stagger: 0.25 });
 	}, [islogin]);
 
+	useEffect(() => {
+		// Redirect if the user is already logged in
+		if (user) {
+			navigate("/", { replace: true }); // Redirect to home page or dashboard
+		}
+	}, [user, navigate]);
 	return (
 		<Wrapper>
 			{isLoading && <Loading />}

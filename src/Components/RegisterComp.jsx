@@ -7,27 +7,18 @@ import { FcGoogle } from "react-icons/fc";
 import UserRegistration from "./UserRegistration";
 import FacilityRegistration from "./FacilityRegistration";
 function RegisterComp() {
-	const { islogin, setislogin, setIsUserRegister, setIsFacilityRegister, isFacilityRegister, isUserRegister, isLoading, setisLoading } =
-		useContext(Context);
-
-	const [formData, setFormData] = useState({
-		username: "",
-		email: "",
-		password: "",
-		fullName: "",
-		facilityName: "",
-		state: "",
-		city: "",
-		pincode: "",
-		contactNo: "",
-		addressLine1: "",
-		addressLine2: "",
-		pickupAvailability: false,
-		openingHours: "",
-		closingHours: "",
-		workingDays: [],
-		wasteTypes: [],
-	});
+	const {
+		islogin,
+		setislogin,
+		setIsUserRegister,
+		setIsFacilityRegister,
+		isFacilityRegister,
+		isUserRegister,
+		isLoading,
+		setisLoading,
+		formData,
+		setFormData,
+	} = useContext(Context);
 
 	const navigate = useNavigate();
 
@@ -63,7 +54,7 @@ function RegisterComp() {
 			});
 			console.log(formData);
 			const data = await res.json();
-			console.log(data);
+			// console.log(data);
 			setisLoading(false);
 			if (data?.message === "User registered successfully") {
 				toastSuccess(data?.message);
@@ -83,8 +74,11 @@ function RegisterComp() {
 	const RegisterFacility = async () => {
 		try {
 			setisLoading(true);
+			// console.log(formData);
 			const { username, fullName, ...facilityData } = formData;
-			console.log(formData);
+			// const cleanedData = { ...facilityData }; // Assuming passwordFields is your request body
+			// delete cleanedData[""];
+			// console.log(facilityData);
 			const res = await fetch("http://localhost:8000/api/v1/facility/register", {
 				method: "POST",
 				headers: {
@@ -92,9 +86,9 @@ function RegisterComp() {
 				},
 				body: JSON.stringify(facilityData),
 			});
-
+			// console.log(res);
 			const data = await res.json();
-			console.log(data);
+			// console.log(data);
 			setisLoading(false);
 			if (data?.message === "Facility created successfully") {
 				toastSuccess(data?.message);

@@ -13,6 +13,14 @@
 	--text-color-dark: #faf9f6;
 	--text-color-light: #222222;
 }
+.dynamic-placeholder::placeholder {
+	color: var(--placeholder-color);
+	opacity: 1;
+}
+.dynamic-button::placeholder {
+	color: var(--button-color);
+	opacity: 1;
+}
 
 body {
 	background-color: var(--background-color-light);

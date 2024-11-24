@@ -23,6 +23,26 @@ const State = (props) => {
 	const [category, setcategory] = useState([]);
 	const [subcategory, setsubcategory] = useState([]);
 	const [Item, setItem] = useState([]);
+	const initialFormData = {
+		username: "",
+		email: "",
+		password: "",
+		fullName: "",
+		facilityName: "",
+		state: "",
+		city: "",
+		pincode: "",
+		contactNo: "",
+		addressLine1: "",
+		addressLine2: "",
+		pickupAvailability: false,
+		openingHours: "",
+		closingHours: "",
+		workingDays: [],
+		wasteTypes: [],
+	};
+	const [formData, setFormData] = useState(initialFormData);
+
 	// const navigate = useNavigate();
 	// To fetch the data for the category
 
@@ -40,10 +60,23 @@ const State = (props) => {
 	};
 
 	// To fetch the user details
+	const getcookie = (name) => {
+		const cookies = document.cookie.split("; ");
+		for (let cookie of cookies) {
+			const [key, value] = cookie.split("=");
+			if (key === name) return value;
+		}
+		return null;
+	};
 	const fetchuser = async () => {
+		const role = getcookie("role");
+		if (!role) {
+			throw new Error("User role not found");
+		}
+		setRole(role);
 		try {
 			const endpoint =
-				role === "user" ? "http://localhost:8000/api/v1/users/current-user" : "http://localhost:8000/api/v1/users/current-facility";
+				role === "user" ? "http://localhost:8000/api/v1/users/current-user" : "http://localhost:8000/api/v1/facility/current-facility";
 			const res = await fetch(endpoint, {
 				method: "GET",
 				// Include cookies with the request
@@ -108,7 +141,24 @@ const State = (props) => {
 			console.error("Error:", error);
 		}
 	};
+	const avatarColor = [
+		{ fgColor: "#F0EDCC", color: "#02343F" },
+		{ fgColor: "#ACC7B4", color: "#331B3F" },
+		{ fgColor: "#CED46A", color: "#07553B" },
+		{ fgColor: "#DCE2F0", color: "#50586C" },
+		{ fgColor: "#FFDFDE", color: "#6A7BA2" },
+		{ fgColor: "#ADEFD1", color: "#00203F" },
+		{ fgColor: "#F2AA4C", color: "#101820" },
+	];
+	const chooseColor = () => {
+		const random = Math.floor(Math.random() * avatarColor.length);
+		return avatarColor[random];
+	};
 
+	const [selectedColor, setSelectedColor] = useState(avatarColor[0]);
+	useEffect(() => {
+		setSelectedColor(chooseColor());
+	}, [user]);
 	// To fetch the Ewaste Facility data
 	const fetchcitystate = async () => {
 		setisLoading(true);
@@ -177,6 +227,10 @@ const State = (props) => {
 				setRole,
 				isUserRegister,
 				setIsUserRegister,
+				selectedColor,
+				formData,
+				setFormData,
+				initialFormData,
 			}}
 		>
 			{props.children}

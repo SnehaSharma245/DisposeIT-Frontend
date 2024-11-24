@@ -8,7 +8,7 @@ import Wrapper from "../Components/Wrapper";
 import Loading from "../Components/Loading";
 import { toastFailure, toastSuccess } from "../utils/Toasters";
 function LoginComp() {
-	const { role, setRole, islogin, setislogin, isLoading, setisLoading, setUser } = useContext(Context);
+	const { role, setRole, user, islogin, setislogin, isLoading, setisLoading, setUser } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
@@ -17,6 +17,7 @@ function LoginComp() {
 		// if (email === "" || password === "") {
 		// 	toastFailure("All fields are required");
 		// } else {
+
 		try {
 			setisLoading(true);
 			const endpoint = role === "user" ? "http://localhost:8000/api/v1/users/login" : "http://localhost:8000/api/v1/facility/login";
@@ -30,24 +31,25 @@ function LoginComp() {
 			});
 
 			const data = await res.json();
-			console.log(data);
+			// console.log(data);
 			setisLoading(false);
 
 			if (data?.success === true) {
-				console.log(data);
+				// console.log(data);
 				if (data?.data?.user) setUser(data?.data?.user);
 				else if (data?.data?.facility) setUser(data?.data?.facility);
+				console.log(user);
 				// localStorage.setItem("user", data?.data?.user?._id);
 				toastSuccess("Login Successfull");
-				navigate("/");
+				navigate("/", { replace: true });
 				setislogin(true);
 			} else {
 				// Handle non-200 responses (e.g., 400, 401, etc.)
-				console.log(data?.message);
+				// console.log(data?.message);
 				toastFailure(data?.message);
 			}
 		} catch (error) {
-			console.log(error);
+			// console.log(error);
 			setisLoading(false);
 			toastFailure(error.message);
 		}

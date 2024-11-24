@@ -12,8 +12,9 @@ import { useEffect } from "react";
 import Avatar from "react-avatar";
 
 const Navbar = () => {
-	const { setislogin, Location, user, islogin, setUser, role } = useContext(Context);
+	const { setislogin, Location, user, islogin, setUser, role, selectedColor } = useContext(Context);
 	// console.log(islogin);
+
 	const navigate = useNavigate();
 	const LogOut = async () => {
 		try {
@@ -36,7 +37,8 @@ const Navbar = () => {
 			alert("Internal server error");
 		}
 	};
-	console.log(islogin);
+
+	// console.log(islogin);
 	return (
 		<div className="shadow-3xl ">
 			<Wrapper>
@@ -52,10 +54,7 @@ const Navbar = () => {
 					<div className="md:flex hidden relative justify-between items-center gap-[10vh]">
 						<nav>
 							<ul className="hidden md:flex gap-10 justify-center items-center ">
-								<li
-									className="font-semibold font-montserrat hover:text-[#01796f] cursor-pointer nav"
-									onClick={() => navigate("/")}
-								>
+								<li className="font-semibold font-montserrat hover:text-[#01796f] cursor-pointer nav" onClick={() => navigate("/")}>
 									<a>Home</a>
 								</li>
 								<li
@@ -66,7 +65,7 @@ const Navbar = () => {
 								</li>
 								<li
 									className="font-semibold font-montserrat hover:text-[#01796f] cursor-pointer nav"
-									onClick={() => document.getElementById("contact").scrollIntoView({ behavior: "smooth" })}
+									onClick={() => document.getElementById("Education").scrollIntoView({ behavior: "smooth" })}
 								>
 									<a>Education</a>
 								</li>
@@ -106,18 +105,9 @@ const Navbar = () => {
 						) : (
 							<div className="md:flex hidden gap-[2vh]">
 								<button
-									className="shadow-5xl font-medium font-poppins hover:text-[#01796f] transition-transform nav"
-									onClick={() => {
-										navigate("/cart");
-									}}
-								>
-									<i class="fi fi-rr-shopping-cart"></i>
-								</button>
-								<button
-									className="   transition-transform nav rounded-full "
+									className="   transition-transform nav rounded-full drop-shadow-md hover:cursor-pointer"
 									onClick={() => {
 										navigate("/profile");
-										console.log(user);
 									}}
 								>
 									<Avatar
@@ -125,6 +115,9 @@ const Navbar = () => {
 										size="50px"
 										maxInitials={2}
 										style={{ borderRadius: "50%" }}
+										fgColor={selectedColor.fgColor}
+										color={selectedColor.color}
+										round={true}
 									/>
 								</button>
 								<div className="md:flex hidden gap-[5vh]">

@@ -10,7 +10,7 @@ function UserRegistration({ formData, handleChange, RegisterUser, navigate }) {
 	return (
 		<div className="auth w-full h-fit flex flex-col items-center shadow-3xl p-[5vh] rounded-xl">
 			<div>
-				<h1 className="mt-[5vh] text-center font-montserrat font-bold text-3xl">Register with Echakran</h1>
+				<h1 className="mt-[5vh] text-center font-montserrat font-bold text-3xl">Register with Dispose.IT</h1>
 				<p className="font-montserrat font-light text-center">Please fill your details to register</p>
 			</div>
 
@@ -42,13 +42,14 @@ function UserRegistration({ formData, handleChange, RegisterUser, navigate }) {
 						name="fullName"
 					/>
 				</div>
-				<div className="md:w-[60vh] w-full flex  gap-4 mt-2 border-b-2">
+				<div className="md:w-[60vh] w-full flex border-b-2  gap-4 mt-2 ">
 					<input
 						type={showPassword ? "text" : "password"}
 						id="password"
 						onChange={handleChange}
 						className=" w-full py-2 px-3 mt-1 font-montserrat"
 						placeholder="Password"
+						name="password"
 					/>
 					<button type="button" onClick={toggleShowPassword} className="mt-1 text-gray-400 hover:text-gray-700 flex items-center">
 						{showPassword ? (
