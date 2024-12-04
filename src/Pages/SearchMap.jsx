@@ -23,8 +23,6 @@ const SearchMap = () => {
 		"Industrial Equipment",
 	];
 
-	const workingDayOptions = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-
 	const indexOfLastFacility = currentPage * facilitiesPerPage;
 	const indexOfFirstFacility = indexOfLastFacility - facilitiesPerPage;
 	const currentFacilities = recyclingCenters.slice(indexOfFirstFacility, indexOfLastFacility);
@@ -101,9 +99,9 @@ const SearchMap = () => {
 			console.log(error);
 		}
 	};
-	// useEffect(() => {
-	// 	fetchDBFacilities();
-	// }, []);
+	useEffect(() => {
+		fetchDBFacilities();
+	}, []);
 
 	const handleLocationError = (browserHasGeolocation) => {
 		alert(browserHasGeolocation ? "Error: The Geolocation service failed." : "Error: Your browser doesn't support geolocation.");
@@ -143,6 +141,7 @@ const SearchMap = () => {
 			if (status === google.maps.places.PlacesServiceStatus.OK) {
 				const updatedResults = await Promise.all(
 					results.map(async (place) => {
+						const detailedPlace = await getPlaceDetails(place.place_id);
 						const { state, city, pincode } = await getStateCityPincode(place.place_id);
 						return {
 							...place,
@@ -154,12 +153,9 @@ const SearchMap = () => {
 								wasteTypeOptions[Math.floor(Math.random() * wasteTypeOptions.length)],
 								wasteTypeOptions[Math.floor(Math.random() * wasteTypeOptions.length)],
 							].filter((value, index, self) => self.indexOf(value) === index),
-							workingDayOptions: [
-								workingDayOptions[Math.floor(Math.random() * workingDayOptions.length)],
-								workingDayOptions[Math.floor(Math.random() * workingDayOptions.length)],
-								workingDayOptions[Math.floor(Math.random() * workingDayOptions.length)],
-								workingDayOptions[Math.floor(Math.random() * workingDayOptions.length)],
-							].filter((value, index, self) => self.indexOf(value) === index),
+							workingDayOptions: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+							openingHours: formatTime(detailedPlace?.opening_hours?.periods?.[0]?.open?.time || "Not available"),
+							closingHours: formatTime(detailedPlace?.opening_hours?.periods?.[0]?.close?.time || "Not available"),
 						};
 					})
 				);
@@ -169,6 +165,29 @@ const SearchMap = () => {
 			}
 		});
 	};
+	// Helper function to get place details
+	const getPlaceDetails = async (placeId) => {
+		return new Promise((resolve, reject) => {
+			const service = new google.maps.places.PlacesService(document.createElement("div"));
+			service.getDetails({ placeId, fields: ["opening_hours"] }, (place, status) => {
+				if (status === google.maps.places.PlacesServiceStatus.OK) {
+					resolve(place);
+				} else {
+					console.error(`Failed to fetch details for placeId: ${placeId}`);
+					resolve(null);
+				}
+			});
+		});
+	};
+
+	// Helper function to format time
+	const formatTime = (time) => {
+		if (!time) return "Not available";
+		const hour = time.substring(0, 2); // Extract the hour part
+		const minute = time.substring(2); // Extract the minute part
+		return `${hour}:${minute}`; // Return in HH:mm format
+	};
+
 	const getStateCityPincode = (placeId) => {
 		return new Promise((resolve, reject) => {
 			const geocoder = new google.maps.Geocoder();
@@ -301,6 +320,13 @@ const SearchMap = () => {
 							</button>
 						</div>
 						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">{place.vicinity}</div>}
+						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Working days: {place.workingDayOptions.join(", ")}</div>}
+						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Opening Hours: {place.openingHours}</div>}
+						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Closing Hours: {place.closingHours}</div>}
+						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Ratings: {place.rating}</div>}
+						{expandedPlaceIndex === index && (
+							<div className="mt-2 text-gray-200">Pickup Availability: {place.pickupAvailability ? "Available" : "Not Available"}</div>
+						)}
 					</li>
 				))}
 			</ul>
