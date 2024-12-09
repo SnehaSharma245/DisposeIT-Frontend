@@ -93,7 +93,9 @@ function Profile() {
 										)}
 										{role === "facility" && (
 											<>
-												<div className="hover:cursor-pointer">View pickup requests</div>
+												<div className="hover:cursor-pointer" onClick={() => {
+          navigate("/view-pr");  // Add this line to handle the redirection
+        }}>View pickup requests</div>
 												<div className="hover:cursor-pointer">View Feedback</div>
 											</>
 										)}

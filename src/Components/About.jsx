@@ -52,10 +52,10 @@ const About = () => {
             />
           </div>
           <h1 className="text-xl font-montserrat font-medium text-center mt-5">
-            Best Price
+            Mission
           </h1>
           <p className="py-4 px-6 text-md font-montserrat text-gray-400">
-          Determine the value of your e-waste items effortlessly using our "Best Price" feature. By inputting item details, such as make and condition, you'll receive an accurate estimate before recycling. We take pride in offering competitive rates, ensuring you get the highest return for your electronics
+          Our mission is to simplify e-waste disposal by providing an easy-to-use platform that helps users locate nearby recycling facilities. We aim to promote responsible recycling by offering accurate, real-time data on facility availability, operating hours, and services. 
           </p>
         </div>
         <div   className="md:max-w-[27vw] w-fit min-h-[30vh] rounded-lg shadow-3xl bg-[#222222] card">
@@ -85,11 +85,11 @@ const About = () => {
             />
           </div>
           <h1 className="text-xl font-montserrat font-medium text-center mt-5">
-            Price Comparison Tool
+            Pickup Scheduler
           </h1>
           <p className="py-4 px-6 text-md font-montserrat text-gray-400">
             {" "}
-            Make well-informed recycling decisions with our "Price Comparison Tool." Easily compare our competitive recycling rates with local competitors to ensure transparency and select the most financially advantageous recycling option. 
+            Our pickup scheduling service makes e-waste disposal convenient by allowing users to easily schedule pickups from nearby recycling centers. With flexible time slots and real-time availability updates, we ensure that electronics are collected on time, promoting eco-friendly disposal.
           </p>
         </div>
         <div  className="md:max-w-[27vw] w-fit min-h-[30vh] rounded-lg shadow-3xl bg-[#222222] card">

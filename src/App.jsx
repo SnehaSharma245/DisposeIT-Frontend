@@ -11,6 +11,7 @@ import EditProfile from "./Pages/EditProfile";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ChangePassword from "./Pages/ChangePassword";
 import SchedulePickup from "./Pages/SchedulePickup";
+import ViewPR from "./Pages/ViewPR";
 
 const App = () => {
 	return (
@@ -30,6 +31,7 @@ const App = () => {
 						<Route exact path="/edit-profile" element={<EditProfile />} />
 						<Route exact path="/change-password" element={<ChangePassword />} />
 						<Route exact path="/schedule-pickup" element={<SchedulePickup />} />
+						<Route exact path="/view-pr" element={<ViewPR />} />
 					</Routes>
 					<Footer />
 				</Router>
