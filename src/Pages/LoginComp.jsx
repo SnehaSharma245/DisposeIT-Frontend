@@ -8,7 +8,7 @@ import Wrapper from "../Components/Wrapper";
 import Loading from "../Components/Loading";
 import { toastFailure, toastSuccess } from "../utils/Toasters";
 function LoginComp() {
-	const { role, setRole, user, islogin, setislogin, isLoading, setisLoading, setUser } = useContext(Context);
+	const { role, setRole, user, islogin, setislogin, isLoading, setisLoading, setUser, isUserLoggedIn, setIsUserLoggedIn } = useContext(Context);
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const navigate = useNavigate();
@@ -42,7 +42,7 @@ function LoginComp() {
 				// localStorage.setItem("user", data?.data?.user?._id);
 				toastSuccess("Login Successfull");
 				navigate("/", { replace: true });
-				setislogin(true);
+				setIsUserLoggedIn(true);
 			} else {
 				// Handle non-200 responses (e.g., 400, 401, etc.)
 				// console.log(data?.message);

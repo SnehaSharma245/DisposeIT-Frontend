@@ -12,7 +12,7 @@ import { useEffect } from "react";
 import Avatar from "react-avatar";
 
 const Navbar = () => {
-	const { setislogin, Location, user, islogin, setUser, role, selectedColor } = useContext(Context);
+	const { setislogin, Location, user, islogin, setUser, role, selectedColor, setIsUserLoggedIn } = useContext(Context);
 	// console.log(islogin);
 
 	const navigate = useNavigate();
@@ -28,7 +28,8 @@ const Navbar = () => {
 			});
 			console.log(res);
 			if (res.ok) {
-				setislogin(false);
+				setIsUserLoggedIn(false);
+				console.log(islogin);
 				setUser(null);
 				navigate("/login");
 			}
@@ -38,7 +39,6 @@ const Navbar = () => {
 		}
 	};
 
-	// console.log(islogin);
 	return (
 		<div className="shadow-3xl ">
 			<Wrapper>
