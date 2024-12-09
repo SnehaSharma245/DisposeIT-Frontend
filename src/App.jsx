@@ -10,6 +10,7 @@ import ProfileDetails from "./Pages/ProfileDetails";
 import EditProfile from "./Pages/EditProfile";
 import ProtectedRoute from "./Components/ProtectedRoute";
 import ChangePassword from "./Pages/ChangePassword";
+import SchedulePickup from "./Pages/SchedulePickup";
 
 const App = () => {
 	return (
@@ -28,6 +29,7 @@ const App = () => {
 						<Route exact path="/profile-details" element={<ProfileDetails />} />
 						<Route exact path="/edit-profile" element={<EditProfile />} />
 						<Route exact path="/change-password" element={<ChangePassword />} />
+						<Route exact path="/schedule-pickup" element={<SchedulePickup />} />
 					</Routes>
 					<Footer />
 				</Router>

@@ -3,9 +3,16 @@ import { GoogleMap, Marker, useJsApiLoader, InfoWindow } from "@react-google-map
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io"; // Import the icons for arrows
 import { render } from "react-dom";
 import LocationForm from "../Components/LocationForm";
+import { useNavigate } from "react-router-dom";
 const apiKey = import.meta.env.VITE_API_KEY;
 
+
+
+
+
 const SearchMap = () => {
+	const navigate = useNavigate();
+
 	const [currentLocation, setCurrentLocation] = useState(null);
 	const [recyclingCenters, setRecyclingCenters] = useState([]);
 	const [selectedPlace, setSelectedPlace] = useState(null);
@@ -84,6 +91,26 @@ const SearchMap = () => {
 		}
 	};
 
+	const dummyFacility = {
+		name: "MP E-waste",
+		vicinity: "Indore, Madhya Pradesh, India",
+		geometry: {
+			location: {
+				lat: 22.822206270920894 + (2 / 111), // Moving 2 km north
+				lng: 75.94323988052533, // Keeping longitude same for simplicity
+			},
+		},
+		pickupAvailability: true,
+		state: "Madhya Pradesh",
+		city: "Indore",
+		pincode: "453771",
+		wasteTypeOptions: ["Consumer Electronics", "IT & Telecommunications Equipment"],
+		workingDayOptions: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+		openingHours: "09:00",
+		closingHours: "18:00",
+		rating: 4.5,
+	};
+	
 	const fetchDBFacilities = async () => {
 		try {
 			const res = await fetch("http://localhost:8000/api/v1/facility/get-all-facilities", {
@@ -159,7 +186,7 @@ const SearchMap = () => {
 						};
 					})
 				);
-				setRecyclingCenters(updatedResults);
+				setRecyclingCenters([dummyFacility, ...updatedResults]);
 			} else {
 				alert("No recycling centers found nearby.");
 			}
@@ -299,35 +326,58 @@ const SearchMap = () => {
 			</div>
 			<ul id="places-list" className="space-y-4">
 				{currentFacilities.map((place, index) => (
-					<li
-						key={index}
-						onClick={() => handleListItemClick(place)} // Click to select and update the marker
-						className="bg-[#41ad5c] p-4 rounded-lg shadow-md hover:bg-[#2b9746] cursor-pointer m-4 "
-					>
-						<div className="flex justify-between items-center">
-							<span className="font-semibold text-lg text-gray-200">{place.name}</span>
-							<button
-								onClick={(e) => {
-									e.stopPropagation();
-									toggleExpandDetails(index); // Prevent triggering list item click
-								}}
-							>
-								{expandedPlaceIndex === index ? (
-									<IoIosArrowUp size={20} className="text-gray-800 bg-[#41ad5c]" />
-								) : (
-									<IoIosArrowDown size={20} className="text-gray-800  bg-[#41ad5c]" />
-								)}
-							</button>
-						</div>
-						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">{place.vicinity}</div>}
-						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Working days: {place.workingDayOptions.join(", ")}</div>}
-						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Opening Hours: {place.openingHours}</div>}
-						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Closing Hours: {place.closingHours}</div>}
-						{expandedPlaceIndex === index && <div className="mt-2 text-gray-200">Ratings: {place.rating}</div>}
-						{expandedPlaceIndex === index && (
-							<div className="mt-2 text-gray-200">Pickup Availability: {place.pickupAvailability ? "Available" : "Not Available"}</div>
-						)}
-					</li>
+
+					
+					
+<li
+    key={index}
+    onClick={() => handleListItemClick(place)} // Click to select and update the marker
+    className="bg-[#41ad5c] p-4 rounded-lg shadow-md hover:bg-[#2b9746] cursor-pointer m-4"
+>
+    <div className="flex justify-between items-center">
+        <span className="font-semibold text-lg text-gray-200">{place.name}</span>
+        <button
+            onClick={(e) => {
+                e.stopPropagation();
+                toggleExpandDetails(index); // Prevent triggering list item click
+            }}
+        >
+            {expandedPlaceIndex === index ? (
+                <IoIosArrowUp size={20} className="text-gray-800 bg-[#41ad5c]" />
+            ) : (
+                <IoIosArrowDown size={20} className="text-gray-800 bg-[#41ad5c]" />
+            )}
+        </button>
+    </div>
+    {expandedPlaceIndex === index && (
+        <div className="mt-2 text-gray-200">
+            <p>{place.vicinity}</p>
+            <p>Working days: {place.workingDayOptions.join(", ")}</p>
+            <p>Opening Hours: {place.openingHours}</p>
+            <p>Closing Hours: {place.closingHours}</p>
+            <p>Ratings: {place.rating}</p>
+            <p>Pickup Availability: {place.pickupAvailability ? "Available" : "Not Available"}</p>
+            <button
+                className={`mt-4 py-2 px-4 rounded-lg shadow-md transition duration-300 ${
+                    place.pickupAvailability
+                        ? "bg-blue-500 text-white hover:bg-blue-600 cursor-pointer"
+                        : "bg-gray-400 text-gray-700 cursor-not-allowed"
+                }`}
+                onClick={(e) => {
+                    if (place.pickupAvailability) {
+                        e.stopPropagation(); // Prevent parent click handler
+                        navigate("/schedule-pickup"); // Replace with your actual scheduling logic
+                    }
+                }}
+                disabled={!place.pickupAvailability}
+            >
+                Schedule Pickup
+            </button>
+        </div>
+    )}
+</li>
+
+
 				))}
 			</ul>
 			{renderPagination()}
