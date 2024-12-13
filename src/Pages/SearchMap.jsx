@@ -321,7 +321,7 @@ const SearchMap = () => {
 			</div>
 			{console.log(recyclingCenters)}
 			<div className="flex flex-col gap-[1vh] items-center">
-				<h1 className="text-2xl font-semibold my-4">Filters</h1>
+				<h1 className="text-2xl font-semibold my-4">Nearby E-waste Recycling Facilities</h1>
 				<div></div>
 			</div>
 			<ul id="places-list" className="space-y-4">
