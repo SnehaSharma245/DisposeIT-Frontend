@@ -92,8 +92,8 @@ const SearchMap = () => {
 	};
 
 	const dummyFacility = {
-		name: "MP E-waste",
-		vicinity: "Indore, Madhya Pradesh, India",
+		name: "Yantra E-waste Recycle Center",
+		vicinity: "Near Safari Park , Indore, Madhya Pradesh, India",
 		geometry: {
 			location: {
 				lat: 22.822206270920894 + (2 / 111), // Moving 2 km north
