@@ -10,10 +10,10 @@ const State = (props) => {
 	// const [isFacilityLogin, setIsFacilityLogin] = useState(false);
 	// const [isUserLogin, setIsUserLogin] = useState(false);
 	const [role, setRole] = useState("user");
-	const [isRegister, setIsRegister] = useState(false);
+
 	const [isFacilityRegister, setIsFacilityRegister] = useState(false);
 	const [isUserRegister, setIsUserRegister] = useState(false);
-
+	const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 	const [Location, setLocation] = useState("");
 	const [Locationstate, setLocationstate] = useState("");
 	const [user, setUser] = useState(null);
@@ -205,6 +205,8 @@ const State = (props) => {
 	return (
 		<Context.Provider
 			value={{
+				isUserLoggedIn,
+				setIsUserLoggedIn,
 				facdata,
 				iscartupdated,
 				setiscartupdated,

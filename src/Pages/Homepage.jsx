@@ -78,7 +78,14 @@ const Homepage = () => {
 			</Wrapper>
 		);
 	} else {
-		return <Profile />;
+		return (
+			<Wrapper>
+				<Profile />
+				<About />
+				<Prodedure />
+				<Contact />
+			</Wrapper>
+		);
 	}
 };
 
