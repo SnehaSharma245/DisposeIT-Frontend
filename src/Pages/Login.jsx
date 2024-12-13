@@ -101,7 +101,11 @@ const Login = () => {
 
 					<div className="auth w-full h-fit flex flex-col items-center shadow-3xl p-[5vh]  rounded-xl">
 						<div>
+<<<<<<< HEAD
 							<h1 className="mt-[5vh] text-center font-montserrat font-bold text-3xl ">Register with Dispose.IT</h1>
+=======
+							<h1 className="mt-[5vh] text-center font-montserrat font-bold text-3xl ">Register with DisposeIT</h1>
+>>>>>>> 76c3b9b56a92d91092c23c218c740a510eb3142b
 							<p className=" font-montserrat font-light text-center">Please choose your role</p>
 						</div>
 

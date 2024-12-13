@@ -116,9 +116,7 @@ function LoginComp() {
 						>
 							Log in
 						</button>
-						<button className="text-md flex items-center justify-center gap-[2vh] w-full font-poppins font-medium  shadow-3xl p-3 rounded-xl hover:bg-red-400 hover:scale-105 transition-transform">
-							Log in with Google
-						</button>
+						
 					</div>
 				</div>
 			</div>
